@@ -4,6 +4,10 @@ import { Input } from "@/components/ui/input"
 import { Plus } from "lucide-react"
 import { SlidersHorizontal } from 'lucide-react';
 import * as React from "react"
+import {ModalRegisterPlayer} from "@/pages/player/modalRegisterPlayer";
+import { ModalRegisterTeam } from "@/pages/team/modalRegisterTeam";
+import { ModalRegisterMatch } from "@/pages/match/modalRegisterMatch";
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -31,20 +35,45 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  type:string
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  type
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
+  const [showModalPlayer,setShowModalPlayer] = React.useState(false);
+  const [showModalTeam,setShowModalTeam] = React.useState(false);
+  const [showModalMatch,setShowModalMatch] = React.useState(false);
+
+
+  function handleClick() {
+    if(type==="Players"){
+       setShowModalPlayer(true);
+    } else
+    if(type==="Teams"){
+    console.log(type)
+      setShowModalTeam(true);
+   }
+   else
+    if(type==="Matchs"){
+    console.log(type)
+    setShowModalMatch(true);
+   }
+  }
+  function handleOnClose(){
+    setShowModalPlayer(false)
+    setShowModalTeam(false)
+    setShowModalMatch(false)
+  }
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
@@ -69,7 +98,11 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      
+      <ModalRegisterPlayer onClose={handleOnClose} visible={showModalPlayer}/>
+      <ModalRegisterTeam onClose={handleOnClose} visible={showModalTeam}/>
+      <ModalRegisterMatch onClose={handleOnClose} visible={showModalMatch}/>
+
+
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter names..."
@@ -79,7 +112,6 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -108,13 +140,12 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button variant="outline" className="mx-1" >
-        <Plus className="mr-2 h-4 w-4" /> New
+        <Button onClick={handleClick} variant="outline" className="mx-1" >
+        <Plus className="mr-2 h-4 w-4" /> New {type}
         </Button>
       </div>
       
     <div className="rounded-md border">
-      
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

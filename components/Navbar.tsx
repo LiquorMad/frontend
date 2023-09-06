@@ -17,9 +17,6 @@ const Navbar = () => {
       <li>
         <Link href="/match">Match</Link>
       </li>
-      <li>
-        <Link href="/result">Result</Link>
-      </li>
     </ul>
   </nav>
   )

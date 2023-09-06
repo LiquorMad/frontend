@@ -17,9 +17,7 @@ import {
 
 export type Player = {
   id: number
-  nome: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
+  nome: string
 }
 
 export const columns: ColumnDef<Player>[] = [
@@ -42,28 +40,25 @@ export const columns: ColumnDef<Player>[] = [
         enableSorting: false,
         enableHiding: false,
       },
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "nome",
-    header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Nome
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        )
+      {
+        accessorKey: "nome",
+        header: ({ column }) => {
+            return (
+              <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              >
+                Nome
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            )
+          },
       },
+  {
+    accessorKey: "apelido",
+    header: "Apelido",
   },
+  
   {
     id: "actions",
     cell: ({ row }) => {

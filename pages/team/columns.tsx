@@ -15,18 +15,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 
-export type Match = {
-  id:number
+export type Time = {
+  id:number;
   nome: string
-  golos_p1: number
-  golos_p2: number
-  player_1: string
-  player_2: string
-  time_1: string
-  time_2: string
 }
 
-export const columns: ColumnDef<Match>[] = [
+export const columns: ColumnDef<Time>[] = [
   {
       id: "select",
       header: ({ table }) => (
@@ -61,33 +55,6 @@ export const columns: ColumnDef<Match>[] = [
           )
         },
     },
-    {
-      accessorKey: "player_1",
-      header: "Player 1",
-    },
-    {
-      accessorKey: "player_2",
-      header: "Player 2",
-    },
-  
- 
- 
-  {
-    accessorKey: "time_1",
-    header: "Time 1",
-  },
-  {
-    accessorKey: "time_2",
-    header: "Time 2",
-  },
-  {
-    accessorKey: "golos_p1",
-    header: "Golos P1",
-  },
-  {
-    accessorKey: "golos_p2",
-    header: "Golos P2",
-  },
   
   {
     id: "actions",

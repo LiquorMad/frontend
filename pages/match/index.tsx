@@ -1,20 +1,16 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { columns } from "./columns"
-import { DataTable } from "../player/data-table"
+import { DataTable } from "@/components/ui/data-table"
 
 type Match = {
-    id: number,
-    nome: string,
-    id_player1: number,
-    id_time1: number,
-    id_player2: number,
-    id_time2: number,
-    estado: string,
-    created_at: string,
-    updated_at: string
-  }
+  id:number
+  nome: string
+  golos_p1: number
+  golos_p2: number
+  player_1: string
+  player_2: string
+  time_1: string
+  time_2: string
+  } 
 type MatchProps ={
     match:Match[],
     text: string
@@ -25,25 +21,17 @@ export async function getStaticProps(){
   const match = await data.json()
 
   return {
-    props: { match,text:'Match'},
+    props: { match,text:'Matchs'},
   }
 
 }
 
 export default function Match({ match,text }:MatchProps){
-    console.log(match)
-const router = useRouter();
-  useEffect(() => {
-  }, [router.query]);
-  
   return(
     <>
-    
-      <h1>Match</h1>
-      <Link href="/match/create">Register</Link>
-
+      <h1>{text}</h1>
       <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={match} />
+        <DataTable columns={columns} data={match} type={text}/>
       </div>
     </>
   ) 

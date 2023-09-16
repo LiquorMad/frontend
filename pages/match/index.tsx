@@ -1,5 +1,12 @@
+import { ModalRegisterMatch } from "@/components/modalRegisterMatch"
 import { columns } from "./columns"
 import { DataTable } from "@/components/ui/data-table"
+import React from "react"
+import { GetServerSideProps } from "next"
+import { loadMatchs, loadPlayers, loadTeams } from "@/lib/load-datas"
+import { Players } from "../player"
+import { Teams } from "../team"
+import { ModalUpdateMatch } from "@/components/modalUpdateMatch"
 
 type Match = {
   id:number
@@ -13,25 +20,61 @@ type Match = {
   } 
 type MatchProps ={
     match:Match[],
-    text: string
+    teams:Teams[]
+    text: string,
+    players: Players[]
 }
-export async function getStaticProps(){
-
-  const data = await fetch('http://127.0.0.1:3333/api/partidas');
-  const match = await data.json()
-
+export const getServerSideProps: GetServerSideProps = async () => {
+  const players = await loadPlayers()
+  const match = await loadMatchs();
+  const teams = await loadTeams();
+  // Props returned will be passed to the page component
   return {
-    props: { match,text:'Matchs'},
+    props: { players,match,teams,text:'Matchs'},
   }
+}
+export async function handleDelete(id:number){
+  
+  // API endpoint where we send form data.
+  const endpoint = `http://127.0.0.1:3333/api/partidas/${id}`
+  // Form the request for sending data to the server.
+  const options = {
+    // The method is POST because we are sending data.
+    method: 'DELETE',
+    // Tell the server we're sending JSON.
+  }
+  // Send the form data to our forms API on Vercel and get a response.
+  await fetch(endpoint, options)
+  
+}
+export default function Match({ match,text,players,teams }:MatchProps){
+const [showModalMatch,setShowModalMatch] = React.useState(false);
 
+function handleClick() {
+  setShowModalMatch(true);
 }
 
-export default function Match({ match,text }:MatchProps){
+function handleOnClose(){
+  setShowModalMatch(false)
+}
   return(
     <>
+      <ModalRegisterMatch 
+        onClose={handleOnClose} 
+        visible={showModalMatch} 
+        players={players} 
+        teams={teams}
+      />
+      <ModalUpdateMatch 
+        onClose={handleOnClose} 
+        visible={showModalMatch} 
+        players={players} 
+        teams={teams}
+
+      />
       <h1>{text}</h1>
       <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={match} type={text}/>
+        <DataTable onAdd={handleClick} columns={columns} data={match} type={text}/>
       </div>
     </>
   ) 

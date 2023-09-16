@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { handleDelete } from "."
 
 
 export type Time = {
@@ -59,7 +60,7 @@ export const columns: ColumnDef<Time>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const match = row.original
+      const team = row.original
  
       return (
         <DropdownMenu>
@@ -71,14 +72,10 @@ export const columns: ColumnDef<Time>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText((match.id).toString())}
-            >
-              Copy match ID
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View match details</DropdownMenuItem>
+            <DropdownMenuItem>View team details</DropdownMenuItem>
+            <DropdownMenuItem onClick={()=>handleDelete(team.id)}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

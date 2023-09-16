@@ -63,8 +63,6 @@ export function ModalRegisterTeam({ visible, onClose }:any) {
     const response = await fetch(endpoint, options)
     // Get the response data from server as JSON.
     // If server returns the name submitted, that means the form works.
-    const result = await response.json()
-    console.log(response)
 
     if(response.status==201){   
       console.log(response.status)
@@ -98,11 +96,8 @@ return (
             <FormItem>
               <FormLabel>Nome</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="Digite o nome do time" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -111,6 +106,7 @@ return (
         <Button className="float-right" variant="outline" onClick={onClose}>Cancel</Button>
       </form>
     </Form>
+    
 </ScrollArea>
 
     </div>

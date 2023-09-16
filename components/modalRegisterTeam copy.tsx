@@ -22,19 +22,16 @@ const formSchema = z.object({
   nome: z.string().min(2, {
     message: "Nome must be at least 2 characters.",
   }),
-  apelido: z.string().min(2, {
-    message: "Apelido must be at least 2 characters.",
-  }),
+  
 })
 
-export function ModalRegisterPlayer({ visible, onClose }:any) {
+export function ModalRegisterTeam({ visible, onClose }:any) {
   if(!visible) return null;
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       nome: "",
-      apelido: "",
     },
   })
   const router = useRouter();
@@ -48,7 +45,7 @@ export function ModalRegisterPlayer({ visible, onClose }:any) {
     const JSONdata = JSON.stringify(values)
 
     // API endpoint where we send form data.
-    const endpoint = 'http://127.0.0.1:3333/api/players'
+    const endpoint = 'http://127.0.0.1:3333/api/times'
 
     // Form the request for sending data to the server.
     const options = {
@@ -66,12 +63,10 @@ export function ModalRegisterPlayer({ visible, onClose }:any) {
     const response = await fetch(endpoint, options)
     // Get the response data from server as JSON.
     // If server returns the name submitted, that means the form works.
-    const result = await response.json()
-    console.log(response)
 
     if(response.status==201){   
       console.log(response.status)
-      router.push('/player');
+      router.push('/team');
       onClose()
     }
   }
@@ -90,47 +85,30 @@ return (
    items-center
     ">
   <div className="bg-white p-4 rounded m-2 drop-shadow-xl">
-  <ScrollArea className="h-[350px] w-[450px] rounded-md border p-4">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-1">
-            <FormField
-              control={form.control}
-              name="nome"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nome</FormLabel>
-                  <FormControl>
-                    <Input placeholder="shadcn" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="apelido"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Apelido</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Digite o apelido" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display apelido.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+  <ScrollArea className="h-[210px] w-[450px] rounded-md border p-4">
+  
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-1">
+        <FormField
+          control={form.control}
+          name="nome"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nome</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite o nome do time" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" variant="outline">Submit</Button>
+        <Button className="float-right" variant="outline" onClick={onClose}>Cancel</Button>
+      </form>
+    </Form>
+    
+</ScrollArea>
 
-            <Button type="submit" variant="outline">Submit</Button>
-            <Button className="float-right" variant="outline" onClick={onClose}>Cancel</Button>
-          </form>
-        </Form>
-      </ScrollArea>
     </div>
     </div>
   )

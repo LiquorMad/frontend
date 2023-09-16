@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import { handleDelete } from "."
 
 export type Match = {
   id:number
@@ -65,6 +65,7 @@ export const columns: ColumnDef<Match>[] = [
       accessorKey: "player_1",
       header: "Player 1",
     },
+    
     {
       accessorKey: "player_2",
       header: "Player 2",
@@ -112,6 +113,7 @@ export const columns: ColumnDef<Match>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
             <DropdownMenuItem>View match details</DropdownMenuItem>
+            <DropdownMenuItem onClick={()=>handleDelete(match.id)}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

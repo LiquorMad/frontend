@@ -6,7 +6,6 @@ import { GetServerSideProps } from "next"
 import { loadMatchs, loadPlayers, loadTeams } from "@/lib/load-datas"
 import { Players } from "../player"
 import { Teams } from "../team"
-import { ModalUpdateMatch } from "@/components/modalUpdateMatch"
 
 type Match = {
   id:number
@@ -65,13 +64,7 @@ function handleOnClose(){
         players={players} 
         teams={teams}
       />
-      <ModalUpdateMatch 
-        onClose={handleOnClose} 
-        visible={showModalMatch} 
-        players={players} 
-        teams={teams}
-
-      />
+     
       <h1>{text}</h1>
       <div className="container mx-auto py-10">
         <DataTable onAdd={handleClick} columns={columns} data={match} type={text}/>

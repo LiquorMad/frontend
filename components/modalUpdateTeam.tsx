@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { createContext } from 'react';
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/router"
+import { useContext } from "react"
+import { loadTeamById } from "@/lib/load-datas"
 
 const formSchema = z.object({
   nome: z.string().min(2, {
@@ -25,7 +27,7 @@ const formSchema = z.object({
   
 })
 
-export function ModalRegisterTeam({ visible, onClose }:any) {
+export function ModalUpdateTeam({ visible, onClose }:any) {
   if(!visible) return null;
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,7 +52,7 @@ export function ModalRegisterTeam({ visible, onClose }:any) {
     // Form the request for sending data to the server.
     const options = {
       // The method is POST because we are sending data.
-      method: 'POST',
+      method: 'PUT',
       // Tell the server we're sending JSON.
       headers: {
         'Content-Type': 'application/json',
@@ -106,9 +108,7 @@ return (
         <Button className="float-right" variant="outline" onClick={onClose}>Cancel</Button>
       </form>
     </Form>
-    
-</ScrollArea>
-
+  </ScrollArea>
     </div>
     </div>
   )

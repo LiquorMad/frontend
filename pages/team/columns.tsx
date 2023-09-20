@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { handleDelete } from "."
 
-
 export type Time = {
   id:number;
   nome: string
@@ -63,6 +62,7 @@ export const columns: ColumnDef<Time>[] = [
       const team = row.original
  
       return (
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
@@ -73,8 +73,7 @@ export const columns: ColumnDef<Time>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View team details</DropdownMenuItem>
+            <DropdownMenuItem>View</DropdownMenuItem>
             <DropdownMenuItem onClick={()=>handleDelete(team.id)}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

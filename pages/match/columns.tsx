@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { handleDelete } from "."
 
-export type Match = {
+export type Matchs = {
   id:number
   nome: string
   golos_p1: number
@@ -26,26 +26,26 @@ export type Match = {
   time_2: string
 }
 
-export const columns: ColumnDef<Match>[] = [
+export const columns: ColumnDef<Matchs>[] = [
   {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
 
     {
       accessorKey: "nome",
@@ -71,8 +71,6 @@ export const columns: ColumnDef<Match>[] = [
       header: "Player 2",
     },
   
- 
- 
   {
     accessorKey: "time_1",
     header: "Time 1",

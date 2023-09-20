@@ -6,6 +6,8 @@ import { GetServerSideProps } from "next"
 import { loadMatchs, loadPlayers, loadTeams } from "@/lib/load-datas"
 import { Players } from "../player"
 import { Teams } from "../team"
+import MatchsTable from '@/components/MatchsTable';
+
 
 type Match = {
   id:number
@@ -67,7 +69,7 @@ function handleOnClose(){
      
       <h1>{text}</h1>
       <div className="container mx-auto py-10">
-        <DataTable onAdd={handleClick} columns={columns} data={match} type={text}/>
+        <MatchsTable data={match} onAdd={handleClick}/>
       </div>
     </>
   ) 

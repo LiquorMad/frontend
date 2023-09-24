@@ -47,8 +47,8 @@ const TeamsRows = ({entry,columns}:any) => {
     console.log(response.status);
     if(response.status===200){   
       console.log(response.status)
-      router.push('/team');
       handleCloseModalEdite()
+      router.push('/team');
     }
   }
 function handleCloseModalEdite(){

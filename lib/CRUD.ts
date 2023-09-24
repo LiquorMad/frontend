@@ -1,10 +1,9 @@
-import { formSchema } from './../components/players/modalRegisterPlayer';
-import { Players } from "@/pages/player";
 import * as z from "zod"
+import { formSchemaRegisterPlayer, formSchemaUpdatePlayer } from "./FormSchema";
 
 const baseUrlPlayers = 'http://127.0.0.1:3333/api/players';
 
-export async function CreatePlayer(players: z.infer<typeof formSchema>){
+export async function CreatePlayer(players: z.infer<typeof formSchemaRegisterPlayer>){
     const JSONdata = JSON.stringify(players)
     const endpoint = baseUrlPlayers;
     const options = {
@@ -25,7 +24,7 @@ export async function DeletePlayer(id:number){
     await fetch(endpoint, options)
   }
 
-  export async function EditPlayer(player:Players){
+  export async function EditPlayer(player: z.infer<typeof formSchemaUpdatePlayer>){
     const JSONdata = JSON.stringify(player)
     const endpoint = `${baseUrlPlayers}/${player.id}`
     const options = {

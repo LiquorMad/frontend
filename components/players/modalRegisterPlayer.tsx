@@ -18,39 +18,21 @@ import {
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/router"
 import { CreatePlayer } from "@/lib/CRUD"
-
-export const formSchema = z.object({
-  nome: z.string()
-  .min(2, {
-    message: "Nome must be at least 2 characters.",
-  })
-  .transform(nome => {
-    return nome.trim().split(' ').map(word => {
-      return word[0].toLocaleUpperCase().concat(word.substring(1))
-    }).join(' ')
-  }),
-  apelido: z.string()
-  .min(2, {
-    message: "Apelido must be at least 2 characters.",
-  })
-  .transform(apelido => {
-    return apelido.trim().split(' ').map(word => {
-      return word[0].toLocaleUpperCase().concat(word.substring(1))
-    }).join(' ')
-  }),
-})
+import { formSchemaRegisterPlayer } from "@/lib/FormSchema"
+import Modal from "../Modal"
 
 export function ModalRegisterPlayer({ visible, onClose }:any) {
-  if(!visible) return null;
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+
+  const form = useForm<z.infer<typeof formSchemaRegisterPlayer>>({
+    resolver: zodResolver(formSchemaRegisterPlayer),
     defaultValues: {
       nome: "",
       apelido: "",
     },
   })
+  
   const router = useRouter();
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchemaRegisterPlayer>) {
     const response = await CreatePlayer(values);
     if(response.status===201){   
       console.log(response.status)
@@ -60,9 +42,7 @@ export function ModalRegisterPlayer({ visible, onClose }:any) {
   }
 
 return (
-  <div  className=" backdrop-blur-sm fixed bg-black bg-opacity-25 p-4 inset-0 flex 
-    justify-center items-center ">
-  <div className="bg-white p-4 rounded m-2 drop-shadow-xl">
+  <Modal visible={visible} onClose={onClose}>
   <ScrollArea className="h-[350px] w-[450px] rounded-md border p-4">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-1">
@@ -99,11 +79,9 @@ return (
               )}
             />
             <Button type="submit" variant="outline">Submit</Button>
-            <Button className="float-right" variant="outline" onClick={onClose}>Cancel</Button>
           </form>
         </Form>
       </ScrollArea>
-    </div>
-    </div>
+      </Modal>
   )
 }

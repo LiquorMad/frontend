@@ -1,18 +1,17 @@
 import React from 'react'
+import { Button } from './ui/button';
 
 function Modal({ visible,children,onClose,text }:any) {
+  if(!visible) return null;
   return (
-      <div className={`modal ${visible ? "modal-open" : "" }`}>
-        <div className="modal-box">
-          <p className="py-4">{text}</p>
-          <div className="modal-action">
-              {children}
-            <label htmlFor="my_modal_6" onClick={onClose} className="btn">Close!</label>
-          </div>
+    <div  className=" backdrop-blur-sm fixed bg-black bg-opacity-25 p-4 inset-0 flex 
+    justify-center items-center ">
+  <div className="bg-white p-4 rounded m-2 drop-shadow-xl">
+        <p className="py-4">{text}</p>
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={onClose}>✕</button>
+            {children}
         </div>
       </div>
-    
-    
     )
 }
 

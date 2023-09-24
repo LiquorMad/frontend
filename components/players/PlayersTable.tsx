@@ -1,13 +1,10 @@
-'use client'
 import React, { useState } from 'react'
-import Header from './Header'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { Eye, FileEdit, Plus, Trash2 } from "lucide-react"
-import { useRouter } from 'next/navigation'
-import { DeletePlayer } from '@/lib/CRUD'
-import PlayersComponent from './PlayersComponent'
+import { Plus } from "lucide-react"
+import PlayersRows from './PlayerRows'
 import { Players } from '@/pages/player'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import Header from '../table/Header'
   
 const Content = ({entries,columns,sorting}:any) => {
 
@@ -24,7 +21,7 @@ const Content = ({entries,columns,sorting}:any) => {
     return (
         <tbody>
             {entries.map((entry:any) =>(
-                <PlayersComponent entry={entry} columns={columns}/>
+                <PlayersRows key={entry.id} entry={entry} columns={columns}/>
             ))}
         </tbody>
     )

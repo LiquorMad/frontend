@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Header from './Header'
+import Header from './table/Header'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { ArrowUpDown, MoreHorizontal,Plus } from "lucide-react"

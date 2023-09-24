@@ -1,8 +1,8 @@
 import { loadPlayers } from '../../lib/load-datas'
 import { GetServerSideProps } from "next"
 import React from "react"
-import { ModalRegisterPlayer } from "@/components/modalRegisterPlayer"
-import PlayersTable from "@/components/PlayersTable"
+import { ModalRegisterPlayer } from "@/components/players/modalRegisterPlayer"
+import PlayersTable from "@/components/players/PlayersTable"
 
 export type Players = {
   id: number,

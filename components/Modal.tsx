@@ -1,16 +1,13 @@
 import React from 'react'
-import { Button } from './ui/button';
 
-function Modal({ visible,children,onClose }:any) {
+function Modal({ visible,children,onClose,text }:any) {
   return (
       <div className={`modal ${visible ? "modal-open" : "" }`}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">This modal works with a hidden checkbox!</p>
+          <p className="py-4">{text}</p>
           <div className="modal-action">
               {children}
-              <Button className="float-right" variant="outline" onClick={onClose}>No</Button>
-            <label htmlFor="my_modal_6" className="btn">Close!</label>
+            <label htmlFor="my_modal_6" onClick={onClose} className="btn">Close!</label>
           </div>
         </div>
       </div>

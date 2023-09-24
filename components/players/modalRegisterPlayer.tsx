@@ -17,8 +17,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/router"
+import { CreatePlayer } from "@/lib/CRUD"
 
-const formSchema = z.object({
+export const formSchema = z.object({
   nome: z.string()
   .min(2, {
     message: "Nome must be at least 2 characters.",
@@ -41,7 +42,6 @@ const formSchema = z.object({
 
 export function ModalRegisterPlayer({ visible, onClose }:any) {
   if(!visible) return null;
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,35 +50,9 @@ export function ModalRegisterPlayer({ visible, onClose }:any) {
     },
   })
   const router = useRouter();
- 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-    // Send the data to the server in JSON format.
-    const JSONdata = JSON.stringify(values)
-
-    // API endpoint where we send form data.
-    const endpoint = 'http://127.0.0.1:3333/api/players'
-
-    // Form the request for sending data to the server.
-    const options = {
-      // The method is POST because we are sending data.
-      method: 'POST',
-      // Tell the server we're sending JSON.
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // Body of the request is the JSON data we created above.
-      body: JSONdata,
-    }
-
-    // Send the form data to our forms API on Vercel and get a response.
-    const response = await fetch(endpoint, options)
-    // Get the response data from server as JSON.
-    // If server returns the name submitted, that means the form works.
-    if(response.status==201){   
+    const response = await CreatePlayer(values);
+    if(response.status===201){   
       console.log(response.status)
       router.push('/player');
       onClose()
@@ -86,18 +60,8 @@ export function ModalRegisterPlayer({ visible, onClose }:any) {
   }
 
 return (
-  <div  className="
-
-  backdrop-blur-sm
-  fixed
-   bg-black
-   bg-opacity-25 
-   p-4 
-   inset-0 
-   flex 
-   justify-center 
-   items-center
-    ">
+  <div  className=" backdrop-blur-sm fixed bg-black bg-opacity-25 p-4 inset-0 flex 
+    justify-center items-center ">
   <div className="bg-white p-4 rounded m-2 drop-shadow-xl">
   <ScrollArea className="h-[350px] w-[450px] rounded-md border p-4">
         <Form {...form}>
@@ -134,7 +98,6 @@ return (
                 </FormItem>
               )}
             />
-
             <Button type="submit" variant="outline">Submit</Button>
             <Button className="float-right" variant="outline" onClick={onClose}>Cancel</Button>
           </form>

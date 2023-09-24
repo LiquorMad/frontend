@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/router"
-import { CreatePlayer } from "@/lib/CRUD"
-import { formSchemaRegisterPlayer } from "@/lib/FormSchema"
+import { CreatePlayer } from "@/lib/CRUD-Players"
+import { formSchemaRegisterPlayer } from "@/lib/FormSchemaPlayers"
 import Modal from "../Modal"
 
 export function ModalRegisterPlayer({ visible, onClose }:any) {

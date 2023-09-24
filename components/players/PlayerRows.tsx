@@ -4,13 +4,13 @@ import Columns from '../table/Columns'
 import { useRouter } from 'next/router';
 import { Eye, FileEdit, Trash2 } from 'lucide-react';
 import { Button } from '../ui/button';
-import { DeletePlayer, EditPlayer } from '@/lib/CRUD';
+import { DeletePlayer, UpdatePlayer } from '@/lib/CRUD-Players';
 import Modal from '../Modal';
 import { Input } from '../ui/input';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { formSchemaUpdatePlayer } from '@/lib/FormSchema';
+import { formSchemaUpdatePlayer } from '@/lib/FormSchemaPlayers';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 
 const PlayerRows = ({entry,columns}:any) => {
@@ -37,7 +37,7 @@ const PlayerRows = ({entry,columns}:any) => {
         },
       })
       async function onSubmit(values: z.infer<typeof formSchemaUpdatePlayer>) {
-        const response = await EditPlayer(values);
+        const response = await UpdatePlayer(values);
         console.log(response.status);
         if(response.status===200){   
           console.log(response.status)
@@ -54,8 +54,7 @@ const PlayerRows = ({entry,columns}:any) => {
         {columns.map((column:any) => (
             <Columns key={column} entry={entry} column={column}/>
         ))}
-        <td className='cursor-pointer'><Eye/> </td>
-        <td className='cursor-pointer flex'>
+        <td className='cursor-pointer flex gap-4'><Eye/> 
             <FileEdit onClick={()=>setModalOpenEdite(true)} />
             <Modal visible={modalOpenEdite} onClose={handleCloseModalEdite} text={textEdit}>
             <Form {...form}>

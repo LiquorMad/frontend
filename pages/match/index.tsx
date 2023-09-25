@@ -1,4 +1,4 @@
-import { ModalRegisterMatch } from "@/components/modalRegisterMatch"
+import { ModalRegisterMatch } from "@/components/matchs/modalRegisterMatch"
 import { columns } from "./columns"
 import { DataTable } from "@/components/ui/data-table"
 import React from "react"
@@ -6,7 +6,7 @@ import { GetServerSideProps } from "next"
 import { loadMatchs, loadPlayers, loadTeams } from "@/lib/load-datas"
 import { Players } from "../player"
 import { Teams } from "../team"
-import MatchsTable from '@/components/MatchsTable';
+import MatchsTable from '@/components/matchs/MatchsTable';
 
 
 type Match = {

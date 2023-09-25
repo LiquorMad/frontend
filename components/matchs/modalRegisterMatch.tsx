@@ -28,7 +28,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/router"
 
-import { loadPlayers } from '../lib/load-datas'
+import { loadPlayers } from '../../lib/load-datas'
 import { GetServerSideProps } from "next"
 import { Players } from "@/pages/player"
 import { Teams } from "@/pages/team"

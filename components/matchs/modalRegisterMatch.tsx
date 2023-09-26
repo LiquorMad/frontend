@@ -36,6 +36,7 @@ import React, { useState } from "react"
 import { Link } from "lucide-react"
 import { formSchemaCreateMatch } from "@/lib/FormSchemaMatchs"
 import { CreateMatch } from "@/lib/CRUD-Matchs"
+import Modal from "../Modal"
 
 type MatchProps = {
   players: Players[],
@@ -68,19 +69,7 @@ export function ModalRegisterMatch({ visible, onClose,players,teams }:MatchProps
     
   }
 return (
-  
-  <div  className="
-    backdrop-blur-sm
-    fixed
-     bg-black
-     bg-opacity-25 
-     p-4 
-     inset-0 
-     flex 
-     justify-center 
-     items-center
-      ">
-    <div className="bg-white p-4 rounded m-2 drop-shadow-xl">
+  <Modal visible={visible} onClose={onClose}>
     <ScrollArea className="h-[400px] w-[450px] rounded-md border p-4">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-1">
@@ -223,11 +212,9 @@ return (
           )}
         />
         <Button type="submit" variant="outline">Submit</Button>
-        <Button className="float-right" variant="outline" onClick={onClose}>Cancel</Button>
       </form>
     </Form>
   </ScrollArea>
-    </div>
-    </div>
+  </Modal>
   )
 }

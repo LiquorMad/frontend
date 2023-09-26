@@ -65,7 +65,6 @@ return (
             )}
           />
           <Button type="submit" variant="outline">Submit</Button>
-          <Button className="float-right" variant="outline" onClick={onClose}>Cancel</Button>
         </form>
       </Form>
     </ScrollArea>

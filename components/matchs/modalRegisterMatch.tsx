@@ -34,42 +34,20 @@ import { Players } from "@/pages/player"
 import { Teams } from "@/pages/team"
 import React, { useState } from "react"
 import { Link } from "lucide-react"
-/*
-export const getServerSideProps: GetServerSideProps = async () => {
-  const players = await loadPlayers()
-  // Props returned will be passed to the page component
-  return {
-    props: { players,text:'Players'},
-  }
-}
-*/
+import { formSchemaCreateMatch } from "@/lib/FormSchemaMatchs"
+import { CreateMatch } from "@/lib/CRUD-Matchs"
+
 type MatchProps = {
   players: Players[],
   teams: Teams[],
   visible: boolean,
   onClose: () => void,
 }
-const formSchema = z.object({
-  nome: z.string()
-  .min(2, {
-    message: "Nome must be at least 2 characters.",
-  })
-  .transform(nome => {
-    return nome.trim().split(' ').map(word => {
-      return word[0].toLocaleUpperCase().concat(word.substring(1))
-    }).join(' ')
-  }),
-  id_player_1: z.string(),
-  id_player_2: z.string(),
-  id_time_1: z.string(),
-  id_time_2: z.string(),
-})
-
 export function ModalRegisterMatch({ visible, onClose,players,teams }:MatchProps) {
   if(!visible) return null;
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemaCreateMatch>>({
+    resolver: zodResolver(formSchemaCreateMatch),
     defaultValues: {
       nome: "",
       id_player_1: "",
@@ -79,35 +57,13 @@ export function ModalRegisterMatch({ visible, onClose,players,teams }:MatchProps
     },
   })
   const router = useRouter();
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // Send the data to the server in JSON format.
-    const JSONdata = JSON.stringify(values)
-    // API endpoint where we send form data.
-    const endpoint = 'http://127.0.0.1:3333/api/partidas'
-    // Form the request for sending data to the server.
-    const options = {
-      // The method is POST because we are sending data.
-      method: 'POST',
-      // Tell the server we're sending JSON.
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // Body of the request is the JSON data we created above.
-      body: JSONdata,
-    }
-    // Send the form data to our forms API on Vercel and get a response.
-    const response = await fetch(endpoint, options)
-    // Get the response data from server as JSON.
-    // If server returns the name submitted, that means the form works.
+  async function onSubmit(values: z.infer<typeof formSchemaCreateMatch>) {
+    const response = await CreateMatch(values)
     
     if(response.status==201){
       
       router.push('/match');
       onClose()
-      
     }
     
   }

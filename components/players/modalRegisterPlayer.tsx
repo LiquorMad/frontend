@@ -32,6 +32,7 @@ export function ModalRegisterPlayer({ visible, onClose }:any) {
   })
   
   const router = useRouter();
+  
   async function onSubmit(values: z.infer<typeof formSchemaRegisterPlayer>) {
     const response = await CreatePlayer(values);
     if(response.status===201){   

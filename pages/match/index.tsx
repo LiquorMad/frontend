@@ -54,7 +54,7 @@ export default function Match({ match,text,players,teams }:MatchProps){
      
       <h1>{text}</h1>
       <div className="container mx-auto py-10">
-        <MatchsTable data={match} onAdd={handleClick}/>
+        <MatchsTable data={match} onAdd={handleClick} players={players}teams={teams}/>
       </div>
     </>
   ) 

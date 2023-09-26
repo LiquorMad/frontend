@@ -12,6 +12,10 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+import { Players } from '@/pages/player'
+import { Teams } from '@/pages/team'
+import { Match } from '@/pages/match'
+import MatchRows from './MatchRows'
 
 
 const Content = ({entries,columns,sorting}:any) => {
@@ -28,42 +32,23 @@ const Content = ({entries,columns,sorting}:any) => {
     return (
         <tbody>
             {entries.map((entry:any) =>(
-                <tr key={entry.id}>
-                    {columns.map((column:any) => (
-                        <td key={column}>{entry[column]}</td>
-                    ))}
-                    <td>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                <span className="sr-only">Open menu</span>
-                                <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>View</DropdownMenuItem>
-                                <DropdownMenuItem onClick={()=>handleDelete(match.id)}>Delete</DropdownMenuItem>
-                                <DropdownMenuItem>Update</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </td>
-                </tr>
+                <MatchRows entry={entry} columns={columns}/>
             ))}
         </tbody>
     )
 }
 
-interface DataTableProps<TData> {
-    data: TData[]
+interface DataTableProps {
+    data: Match[]
     onAdd: () => void
+    players: Players[]
+    teams: Teams[]
   }
   
-  export function TeamsTable<TData>({
+  export function MatchTable({
     data,
-    onAdd
-}: DataTableProps<TData>) {
+    onAdd,
+}: DataTableProps) {
     const columns = ['id','nome','player_1','player_2','time_1','time_2']
 
     const sortTable = (newSorting:any) => {
@@ -98,4 +83,4 @@ interface DataTableProps<TData> {
     )
 }
 
-export default TeamsTable
+export default MatchTable

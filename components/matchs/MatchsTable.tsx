@@ -24,7 +24,7 @@ const Content = ({entries,columns,sorting,players,teams}:any) => {
     return (
         <tbody>
             {entries.map((entry:any) =>(
-                <MatchRows players={players} teams={teams} entry={entry} columns={columns}/>
+                <MatchRows key={entry.id} players={players} teams={teams} entry={entry} columns={columns}/>
             ))}
         </tbody>
     )
@@ -68,7 +68,6 @@ interface DataTableProps {
                     sortTable={sortTable}
                 />
                 <Content
-                    key=""
                     entries={data} 
                     columns={columns} 
                     sorting={sorting}

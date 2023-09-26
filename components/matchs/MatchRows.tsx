@@ -13,13 +13,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { formSchemaUpdateMatch } from '@/lib/FormSchemaMatchs';
 import { Button } from '../ui/button';
+import { Players } from '@/pages/player';
+import { Teams } from '@/pages/team';
 
-function MatchRows({entry,columns,players,teams}:any) {
+type MatchProps = {
+    entry: any,
+    columns: any,
+    players: Players[],
+    teams: Teams[]
+} 
+function MatchRows({entry,columns,players,teams}:MatchProps) {
     const router = useRouter();
   const [modalOpenDelete, setModalOpenDelete] = useState<boolean>(false);
   const [modalOpenEdite, setModalOpenEdite] = useState<boolean>(false);
   const textDelete = "Are you sure, you want to delete this Team!";
   const textEdit = "Edit Match";
+
   async function handleDelete(id: number){
     const response =await DeleteMatch(id)
     setModalOpenDelete(false);
@@ -91,7 +100,7 @@ function handleCloseModalEdite(){
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4">
-                                {players.map((player:any) =>(
+                                {players.map((player:Players) =>(
                                     <SelectItem  
                                     value={player.id.toString()} 
                                     key={player.id}>{player.nome}
@@ -122,7 +131,7 @@ function handleCloseModalEdite(){
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4">
-                                {players.map((player:any) =>(
+                                {players.map((player:Players) =>(
                                     <SelectItem 
                                     value={player.id.toString()} 
                                     key={player.id}>{player.nome}
@@ -153,7 +162,7 @@ function handleCloseModalEdite(){
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4"> 
-                                {teams.map((team:any) =>(
+                                {teams.map((team:Teams) =>(
                                     <SelectItem 
                                     value={team.id.toString()} 
                                     key={team.id}>{team.nome}
@@ -183,7 +192,7 @@ function handleCloseModalEdite(){
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4"> 
-                                {teams.map((team:any) =>(
+                                {teams.map((team:Teams) =>(
                                     <SelectItem 
                                     value={team.id.toString()} 
                                     key={team.id}>{team.nome}

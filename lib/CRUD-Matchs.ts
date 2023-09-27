@@ -26,6 +26,8 @@ export async function DeleteMatch(id:number){
 
   export async function UpdateMatch(match: z.infer<typeof formSchemaUpdateMatch>){
     const JSONdata = JSON.stringify(match)
+    console.log(JSONdata)
+
     const endpoint = `${baseUrlMatchs}/${match.id}`
     const options = {
       method: 'PUT',

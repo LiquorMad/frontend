@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from './ui/button';
 
 function Modal({ visible,children,onClose,text }:any) {
   if(!visible) return null;

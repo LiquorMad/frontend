@@ -40,19 +40,17 @@ function MatchRows({entry,columns,players,teams}:MatchProps) {
   const form = useForm<z.infer<typeof formSchemaUpdateMatch>>({
     resolver: zodResolver(formSchemaUpdateMatch),
     defaultValues: {
-      nome: entry.nome,
-      id_player_1: entry.player_1,
-      id_player_2: entry.player_2,
-      id_time_1: entry.time_1,
-      id_time_2: entry.time_2,
+        id: entry.id,
+        nome: entry.nome,
+        player_1: entry.player_1,
+        player_2: entry.player_2,
+        time_1: entry.time_1,
+        time_2: entry.time_2,
     },
   })
   async function onSubmit(values: z.infer<typeof formSchemaUpdateMatch>) {
-    console.log(values)
     const response = await UpdateMatch(values);
-    console.log(response.status);
     if(response.status===200){   
-      console.log(response.status)
       handleCloseModalEdite()
       router.push('/match');
     }
@@ -72,38 +70,40 @@ function handleCloseModalEdite(){
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-1">
                         <FormField
-                        control={form.control}
-                        name="nome"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Nome</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Digite o nome da partida" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
-                            <FormMessage />
-                            </FormItem>
-                        )}
+                            control={form.control}
+                            name="nome"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Nome</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Digite o nome da partida" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    This is your public display name.
+                                </FormDescription>
+                                <FormMessage />
+                                </FormItem>
+                            )
+                        }
                         />
                         <FormField
                         control={form.control}
-                        name="id_player_1"
+                        name="player_1"
                         render={({ field }) => (
                             <FormItem>
-                            <FormLabel>Player 1</FormLabel>
+                            <FormLabel>P1</FormLabel>
                             <FormControl>
                             <Select onValueChange={field.onChange} >
                                 <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Escolhe o Player 1" />
+                                <SelectValue placeholder={field.value} />
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4">
                                 {players.map((player:Players) =>(
                                     <SelectItem  
-                                    value={player.id.toString()} 
-                                    key={player.id}>{player.nome}
+                                        value={player.nome} 
+                                        key={player.id}>
+                                            {player.nome}
                                     </SelectItem>
                                 ))}
                                 </ScrollArea>
@@ -119,22 +119,22 @@ function handleCloseModalEdite(){
                         />
                         <FormField
                         control={form.control}
-                        name="id_player_2"
+                        name="player_2"
                         render={({ field }) => (
                             <FormItem>
                             <FormLabel>P2</FormLabel>
                             <FormControl>
                             <Select onValueChange={field.onChange} >
-
                                 <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Escolhe o Player 2" />
+                                <SelectValue placeholder={field.value} />
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4">
                                 {players.map((player:Players) =>(
                                     <SelectItem 
-                                    value={player.id.toString()} 
-                                    key={player.id}>{player.nome}
+                                        value={player.nome} 
+                                        key={player.id}>
+                                            {player.nome}
                                     </SelectItem>
                                 ))}
                                 </ScrollArea>
@@ -151,21 +151,22 @@ function handleCloseModalEdite(){
                         
                         <FormField
                         control={form.control}
-                        name="id_time_1"
+                        name="time_1"
                         render={({ field }) => (
                             <FormItem>
                             <FormLabel>Time 1</FormLabel>
                             <FormControl>
                             <Select onValueChange={field.onChange} >
                                 <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Escolhe o time 1" />
+                                <SelectValue placeholder={field.value} />
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4"> 
                                 {teams.map((team:Teams) =>(
                                     <SelectItem 
-                                    value={team.id.toString()} 
-                                    key={team.id}>{team.nome}
+                                        value={team.nome} 
+                                        key={team.id}>
+                                            {team.nome}
                                     </SelectItem>
                                 ))}
                                 </ScrollArea>
@@ -181,21 +182,22 @@ function handleCloseModalEdite(){
                         />
                         <FormField
                         control={form.control}
-                        name="id_time_2"
+                        name="time_2"
                         render={({ field }) => (
                             <FormItem>
                             <FormLabel>Time 2</FormLabel>
                             <FormControl>
                             <Select onValueChange={field.onChange} >
                                 <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Escolhe o time 2" />
+                                <SelectValue placeholder={field.value} />
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4"> 
                                 {teams.map((team:Teams) =>(
                                     <SelectItem 
-                                    value={team.id.toString()} 
-                                    key={team.id}>{team.nome}
+                                        value={team.nome} 
+                                        key={team.id}>
+                                            {team.nome}
                                     </SelectItem>
                                 ))}
                                 </ScrollArea>

@@ -6,6 +6,7 @@ import { loadMatchs, loadPlayers, loadTeams } from "@/lib/load-datas"
 import { Players } from "../player"
 import { Teams } from "../team"
 import MatchsTable from '@/components/matchs/MatchsTable';
+import { parseCookies } from "nookies"
 
 export type Match = {
   id:number
@@ -23,7 +24,17 @@ type MatchProps ={
     text: string,
     players: Players[]
 }
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const {['ps4StandingsAuth.token']: token} = parseCookies(ctx)
+
+  if(!token){
+    return{
+      redirect: { 
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
   const players = await loadPlayers()
   const match = await loadMatchs();
   const teams = await loadTeams();

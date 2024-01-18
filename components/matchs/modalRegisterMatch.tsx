@@ -5,8 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
 
 import {
   Select,
@@ -28,12 +26,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/router"
 
-import { loadPlayers } from '../../lib/load-datas'
-import { GetServerSideProps } from "next"
 import { Players } from "@/pages/player"
 import { Teams } from "@/pages/team"
 import React, { useState } from "react"
-import { Link } from "lucide-react"
 import { formSchemaCreateMatch } from "@/lib/FormSchemaMatchs"
 import { CreateMatch } from "@/lib/CRUD-Matchs"
 import Modal from "../Modal"

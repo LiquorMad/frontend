@@ -2,6 +2,8 @@ import React from 'react'
 import { ModalRegisterTeam } from '@/components/teams/modalRegisterTeam';
 import { loadTeamById } from '@/lib/load-datas';
 import TeamsTable from '@/components/teams/TeamsTable';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 
 export type Teams = {
     id: number,
@@ -12,7 +14,16 @@ export type Teams = {
     text:string
   }
 
-  export async function getStaticProps(){
+    export const getServerSideProps: GetServerSideProps = async (ctx) => {
+      const {['ps4StandingsAuth.token']: token} = parseCookies(ctx)
+      if(!token){
+        return{
+          redirect: { 
+            destination: '/login',
+            permanent: false,
+          }
+        }
+      }
     const data = await fetch('http://127.0.0.1:3333/api/times');
     const teams = await data.json()
     return {

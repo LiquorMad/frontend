@@ -4,7 +4,6 @@ export async function loadPlayers() {
     const players = await data.json()
     return players
   }
-
   export async function loadTeams() {
     // Call an external API endpoint to get posts
     const dataTeams = await fetch('http://127.0.0.1:3333/api/times')
@@ -17,11 +16,15 @@ export async function loadPlayers() {
     const teams = await data.json()
     return teams;
   }
-
   export async function loadMatchs() {
     // Call an external API endpoint to get posts
     const data = await fetch('http://127.0.0.1:3333/api/partidas')
     const match = await data.json()
     return match;
   }
-
+  export async function loadUserByEmail(email:string) {
+    // Call an external API endpoint to get posts
+    const data = await fetch(`http://127.0.0.1:3333/api/users/${email}`);
+    const users = await data.json()
+    return users;
+  }

@@ -9,7 +9,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,28 +18,21 @@ import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
 import Modal from "../Modal"
 import { CreateTeam } from "@/lib/CRUD-Teams"
-
-const formSchema = z.object({
-  nome: z.string().min(2, {
-    message: "Nome must be at least 2 characters.",
-  }),
-  
-})
+import { formSchemaCreateTeam } from "@/lib/FormSchemaTeams"
 
 export function ModalRegisterTeam({ visible, onClose }:any) {
   if(!visible) return null;
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchemaCreateTeam>>({
+    resolver: zodResolver(formSchemaCreateTeam),
     defaultValues: {
       nome: "",
     },
   })
   const router = useRouter();
  
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchemaCreateTeam>) {
     const response = await CreateTeam(values);
     if(response.status==201){   
-      console.log(response.status)
       router.push('/team');
       onClose()
     }

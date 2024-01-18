@@ -22,12 +22,13 @@ type MatchProps = {
     players: Players[],
     teams: Teams[]
 } 
+
 function MatchRows({entry,columns,players,teams}:MatchProps) {
     const router = useRouter();
-  const [modalOpenDelete, setModalOpenDelete] = useState<boolean>(false);
-  const [modalOpenEdite, setModalOpenEdite] = useState<boolean>(false);
-  const textDelete = "Are you sure, you want to delete this Team!";
-  const textEdit = "Edit Match";
+    const [modalOpenDelete, setModalOpenDelete] = useState<boolean>(false);
+    const [modalOpenEdite, setModalOpenEdite] = useState<boolean>(false);
+    const textDelete = "Are you sure, you want to delete this Team!";
+    const textEdit = "Edit Match";
 
   async function handleDelete(id: number){
     const response =await DeleteMatch(id)
@@ -99,13 +100,13 @@ function handleCloseModalEdite(){
                                 </SelectTrigger>
                                 <SelectContent>
                                 <ScrollArea className="h-[200px] w-[200px] rounded-md border p-4">
-                                {players.map((player:Players) =>(
-                                    <SelectItem  
-                                        value={player.nome} 
-                                        key={player.id}>
-                                            {player.nome}
-                                    </SelectItem>
-                                ))}
+                                    {players.map((player:Players) =>(
+                                        <SelectItem  
+                                            value={player.nome} 
+                                            key={player.id}>
+                                                {player.nome}
+                                        </SelectItem>
+                                    ))}
                                 </ScrollArea>
                                 </SelectContent>
                             </Select>

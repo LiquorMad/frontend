@@ -14,6 +14,8 @@ export async function CreateTeam(Teams: z.infer<typeof formSchemaCreateTeam>){
       body: JSONdata,
     }
     const response = await fetch(endpoint, options)
+    console.log(response)
+
     return response;
 }
 export async function DeleteTeam(id:number){

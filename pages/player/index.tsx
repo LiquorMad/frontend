@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next"
 import React from "react"
 import { ModalRegisterPlayer } from "@/components/players/modalRegisterPlayer"
 import PlayersTable from "@/components/players/PlayersTable"
+import { parseCookies } from 'nookies'
 
 export type Players = {
   id: number,
@@ -15,7 +16,17 @@ type PlayersProps = {
   text:string
 }
  
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const {['ps4StandingsAuth.token']: token} = parseCookies(ctx)
+
+  if(!token){
+    return{
+      redirect: { 
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
   const players = await loadPlayers()
   return {
     props: { players,text:'Players'},
